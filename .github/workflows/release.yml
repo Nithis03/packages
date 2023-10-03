@@ -24,6 +24,14 @@ jobs:
             echo "::set-output name=module::none"
           fi
 
+      - name: Update nest-cli.json root path
+        if: ${{ steps.detect-modified-module.outputs.module != 'none' }}
+        run: |
+          module=${{ steps.detect-modified-module.outputs.module }}
+          jq --arg module "$module" '.root = "apps/\($module)"' nest-cli.json > nest-cli-updated.json
+          mv nest-cli-updated.json nest-cli.json
+
+          
       # - name: Configure AWS Credentials
       #   uses: aws-actions/configure-aws-credentials@v2
       #   with:
@@ -31,12 +39,6 @@ jobs:
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #     aws-region: ${{ secrets.AWS_REGION }}
           
-      - name: Update nest-cli.json root path
-        if: ${{ steps.detect-modified-module.outputs.module != 'none' }}
-        run: |
-          module=${{ steps.detect-modified-module.outputs.module }}
-          jq --arg module "$module" '.root = "apps/\($module)"' nest-cli.json > nest-cli-updated.json
-          mv nest-cli-updated.json nest-cli.json
 
       # - name: Login to AWS ECR
       #   if: ${{ steps.detect-modified-module.outputs.module != 'none' }}
