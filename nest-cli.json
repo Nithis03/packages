@@ -8,5 +8,5 @@
     "tsConfigPath": "apps/clock-gain/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/clock-gain"
+  "root": "apps"
 }
