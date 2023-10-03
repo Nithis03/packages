@@ -1,24 +1,51 @@
-name: Node.js Package
+name: Update Root Path
 
 on:
   push:
     branches:
-        - main
+      - main
 
 jobs:
-  publish-gpr:
+  update-root-path:
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-          scope: "@Nithis03"
-      - run: npm install
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Determine modified module
+        id: detect-modified-module
+        run: |
+          if git diff --name-only HEAD^..HEAD | grep -q 'apps/camped'; then
+            echo "::set-output name=module::camped"
+          elif git diff --name-only HEAD^..HEAD | grep -q 'apps/clock-gain'; then
+            echo "::set-output name=module::clock-gain"
+          else
+            echo "::set-output name=module::none"
+          fi
+
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ${{ secrets.AWS_REGION }}
+          
+      - name: Update nest-cli.json root path
+        if: ${{ steps.detect-modified-module.outputs.module != 'none' }}
+        run: |
+          module=${{ steps.detect-modified-module.outputs.module }}
+          jq --arg module "$module" '.root = "apps/\($module)"' nest-cli.json > nest-cli-updated.json
+          mv nest-cli-updated.json nest-cli.json
+
+      # - name: Login to AWS ECR
+      #   if: ${{ steps.detect-modified-module.outputs.module != 'none' }}
+      #   run: |
+      #     echo $(aws ecr get-login-password --region $AWS_REGION) | docker login --username AWS --password-stdin 203320314678.dkr.ecr.$AWS_REGION.amazonaws.com
+          
+      # - name: Build Docker image
+      #   if: ${{ steps.detect-modified-module.outputs.module != 'none' }}
+      #   run: |
+      #     docker build -t ${{ steps.detect-modified-module.outputs.module }} .
+
+      # Continue with the rest of your steps for building and deploying...
