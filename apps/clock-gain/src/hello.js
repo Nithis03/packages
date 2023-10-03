@@ -1,5 +1,2 @@
-{
-  console.log("helloo");
-}
-
+console.log("HEEE")
 
