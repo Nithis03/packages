@@ -39,6 +39,16 @@ jobs:
           if [[ "${{ steps.abc.outputs.all }}" == *'apps/clock-gain'* ]]; then
             echo "This is a clock-gain event"
             sed -i 's|"root": ".*"|"root": "apps/clock-gain"|' nest-cli.json
+            git config --global user.email "nithishkumar.g@increscotech.com"
+            git config --global user.name "nithis03"
+            echo "Config done"
+            git remote set-url origin https://${{ secrets.GH_PAT }}@github.com/Nithis03/packages.git
+            echo "rm done"
+            git add nest-cli.json
+            echo "add done"
+            git commit -m "Update root path to 'apps/clock-gain'"
+            echo "commit done"
+            git push
           elif [[ "${{ steps.abc.outputs.all }}" == *'apps/camped'* ]]; then
             echo "This is a camped event"
             sed -i 's|"root": ".*"|"root": "apps/camped"|' nest-cli.json
