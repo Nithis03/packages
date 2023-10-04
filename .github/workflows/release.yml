@@ -33,6 +33,14 @@ jobs:
           echo "Added+Modified:"
           echo "${{ steps.abc.outputs.added_modified }}"
 
+      - name: Modify test test/overwrite.file.md
+        uses: actions/github-action-modify-file-content
+        with:
+          branch: main
+          path: main/nest-cli.json
+          body: "root: ${{ steps.abc.outputs.modified }}"
+          overwrite: "true"
+
       # - name: List Modified Files
       #   run: |
       #     modified_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
