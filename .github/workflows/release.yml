@@ -37,7 +37,7 @@ jobs:
         uses: jaywcjlove/github-action-modify-file-content@main
         with:
           branch: main
-          path: main/nest-cli.json
+          path: nest-cli.json
           body: "root: ${{ steps.abc.outputs.modified }}"
           overwrite: "true"
 
