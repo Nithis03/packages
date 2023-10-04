@@ -33,13 +33,18 @@ jobs:
           echo "Added+Modified:"
           echo "${{ steps.abc.outputs.added_modified }}"
 
-      - name: Modify test test/overwrite.file.md
-        uses: jaywcjlove/github-action-modify-file-content@main
-        with:
-          branch: main
-          path: nest-cli.json
-          body: "root: ${{ steps.abc.outputs.modified }}"
-          overwrite: "true"
+      - name: Check for 'apps/clockgain' in changed files
+        id: check-clockgain
+        run: |
+          if echo "${{ steps.abc.outputs.all }}" | grep -q "apps/clockgain"; then
+            echo "The 'apps/clockgain' directory has changes."
+            
+            # Update the 'nest-cli.json' file
+            jq '.root = "apps/clockgain"' nest-cli.json > nest-cli-updated.json
+            mv nest-cli-updated.json nest-cli.json
+          else
+            echo "No changes in 'apps/clockgain' directory."
+          fi
 
       # - name: List Modified Files
       #   run: |
