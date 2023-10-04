@@ -41,7 +41,7 @@ jobs:
             sed -i 's|"root": ".*"|"root": "apps/clock-gain"|' nest-cli.json
             git config --global user.email "nithishkumar.g@increscotech.com"
             git config --global user.name "nithis03"
-            git remote add origin_with_token https://$GH_PAT@github.com/Nithis03/packages.git
+            git remote add origin_with_token https://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@github.com/Nithis03/packages.git
             git add nest-cli.json
             git commit -m "Update root path to 'apps/clock-gain'"
             git push origin main
