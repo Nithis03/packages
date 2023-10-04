@@ -1,3 +1,1 @@
-console.log("HEEE")
-
-console.log("Happy world")
+console.log("Happy days")

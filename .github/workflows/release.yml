@@ -16,7 +16,7 @@ jobs:
         id: abc
         with:
           format: space-delimited
-          token: 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
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Printing
         run: |
