@@ -5,7 +5,7 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": ""
+    "tsConfigPath": "apps/camped/tsconfig.app.json"
   },
   "monorepo": true,
   "root": "apps/camped"
