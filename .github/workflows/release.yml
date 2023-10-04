@@ -56,7 +56,7 @@ jobs:
               echo "No need to update, 'root' is already 'apps/clock-gain'"
             fi
           elif [[ "${{ steps.abc.outputs.all }}" == *'apps/camped'* ]]; then
-            if [[ "$current_root" != "apps/clock-gain" ]]; then
+            if [[ "$current_root" != "apps/camped" ]]; then
               echo "This is a camped event"
               sed -i 's|"root": ".*"|"root": "apps/camped"|' nest-cli.json
               sed -i 's|"tsConfigPath": ".*"|"tsConfigPath": "apps/camped/tsconfig.app.json"|' nest-cli.json
