@@ -36,40 +36,50 @@ jobs:
       - name: Check for 'apps/clockgain' in changed files
         id: check-clockgain
         run: |
+          current_root=$(jq -r .root nest-cli.json)
           if [[ "${{ steps.abc.outputs.all }}" == *'apps/clock-gain'* ]]; then
-            echo "This is a clock-gain event"
-            sed -i 's|"root": ".*"|"root": "apps/clock-gain"|' nest-cli.json
-            sed -i 's|"tsConfigPath": ".*"|"tsConfigPath": "apps/clock-gain/tsconfig.app.json"|' nest-cli.json
-            git config --global user.email "nithishkumar.g@increscotech.com"
-            git config --global user.name "nithis03"
-            echo "Config done"
-            git remote set-url origin https://${{ secrets.GH_PAT }}@github.com/Nithis03/packages.git
-            echo "rm done"
-            git add nest-cli.json
-            echo "add done"
-            git commit -m "Update root path to 'apps/clock-gain'"
-            echo "commit done"
-            git push
+            if [[ "$current_root" != "apps/clock-gain" ]]; then
+              echo "This is a clock-gain event"
+              sed -i 's|"root": ".*"|"root": "apps/clock-gain"|' nest-cli.json
+              sed -i 's|"tsConfigPath": ".*"|"tsConfigPath": "apps/clock-gain/tsconfig.app.json"|' nest-cli.json
+              git config --global user.email "nithishkumar.g@increscotech.com"
+              git config --global user.name "nithis03"
+              echo "Config done"
+              git remote set-url origin https://${{ secrets.GH_PAT }}@github.com/Nithis03/packages.git
+              echo "rm done"
+              git add nest-cli.json
+              echo "add done"
+              git commit -m "Update root path to 'apps/clock-gain'"
+              echo "commit done"
+              git push
+            else
+              echo "No need to update, 'root' is already 'apps/clock-gain'"
+            fi
           elif [[ "${{ steps.abc.outputs.all }}" == *'apps/camped'* ]]; then
-            echo "This is a camped event"
-            sed -i 's|"root": ".*"|"root": "apps/camped"|' nest-cli.json
-            sed -i 's|"tsConfigPath": ".*"|"tsConfigPath": "apps/camped/tsconfig.app.json"|' nest-cli.json
-            git config --global user.email "nithishkumar.g@increscotech.com"
-            git config --global user.name "nithis03"
-            echo "Config done"
-            git remote set-url origin https://${{ secrets.GH_PAT }}@github.com/Nithis03/packages.git
-            echo "rm done"
-            git add nest-cli.json
-            echo "add done"
-            git commit -m "Update root path to 'apps/clock-gain'"
-            echo "commit done"
-            git push
+            if [[ "$current_root" != "apps/clock-gain" ]]; then
+              echo "This is a camped event"
+              sed -i 's|"root": ".*"|"root": "apps/camped"|' nest-cli.json
+              sed -i 's|"tsConfigPath": ".*"|"tsConfigPath": "apps/camped/tsconfig.app.json"|' nest-cli.json
+              git config --global user.email "nithishkumar.g@increscotech.com"
+              git config --global user.name "nithis03"
+              echo "Config done"
+              git remote set-url origin https://${{ secrets.GH_PAT }}@github.com/Nithis03/packages.git
+              echo "rm done"
+              git add nest-cli.json
+              echo "add done"
+              git commit -m "Update root path to 'apps/clock-gain'"
+              echo "commit done"
+              git push
+            else
+              echo "No need to update, 'root' is already 'apps/clock-gain'"
+            fi
           else
-            echo "This is an unknown event"
+              echo "This is an unknown event"
           fi
     
   clock-gain-deployment:
     runs-on: ubuntu-latest
+    needs: check-modified-app
     steps:
       - name: Check if root is 'clock-gain' in nest-cli.json
         id: check-root
@@ -82,6 +92,7 @@ jobs:
 
   camped-deployment:
     runs-on: ubuntu-latest
+    needs: check-modified-app
     steps:
       - name: Check if root is 'camped' in nest-cli.json
         id: check-root
