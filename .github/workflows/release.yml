@@ -81,6 +81,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: check-modified-app
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Check if root is 'clock-gain' in nest-cli.json
         id: check-root
         run: |
@@ -94,6 +96,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: check-modified-app
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Check if root is 'camped' in nest-cli.json
         id: check-root
         run: |
