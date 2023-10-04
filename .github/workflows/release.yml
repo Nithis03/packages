@@ -38,8 +38,16 @@ jobs:
         run: |
           if [[ "${{ steps.abc.outputs.all }}" == *'apps/clock-gain'* ]]; then
             echo "This is a clock-gain event"
+            sed -i 's|"root": ".*"|"root": "apps/clock-gain"|' nest-cli.json
+            git add nest-cli.json
+            git commit -m "Update root path to 'apps/clock-gain'"
+            git push origin main
           elif [[ "${{ steps.abc.outputs.all }}" == *'apps/camped'* ]]; then
             echo "This is a camped event"
+            sed -i 's|"root": ".*"|"root": "apps/camped"|' nest-cli.json
+            git add nest-cli.json
+            git commit -m "Update root path to 'apps/camped'"
+            git push origin main
           else
             echo "This is an unknown event"
           fi
