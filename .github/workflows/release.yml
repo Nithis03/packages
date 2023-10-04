@@ -76,7 +76,7 @@ jobs:
           else
               echo "This is an unknown event"
           fi
-    
+
   clock-gain-deployment:
     runs-on: ubuntu-latest
     needs: check-modified-app
@@ -89,7 +89,7 @@ jobs:
           root=$(jq -r '.root' nest-cli.json)
           if [[ "$root" != "apps/clock-gain" ]]; then
             echo "Skipping workflow since root is not 'apps/clock-gain'"
-            exit 78  # Skip the job with a neutral exit code
+            echo "::set-output name=result::skip"
           fi
 
   camped-deployment:
@@ -106,8 +106,6 @@ jobs:
             echo "Skipping workflow since root is not 'apps/camped'"
             exit 78  # Skip the job with a neutral exit code
           fi
-
-
 
       # - name: List Modified Files
       #   run: |
