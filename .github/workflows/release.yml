@@ -9,11 +9,6 @@ jobs:
   update-root-path:
     runs-on: ubuntu-latest
 
-    permissions:
-      pull-requests: write
-      issues: write
-      repository-projects: write
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -47,7 +42,7 @@ jobs:
             git config --global user.email "nithishkumar.g@increscotech.com"
             git config --global user.name "nithis03"
             echo "Config done"
-            git remote add origin_with_token https://$GH_PAT@github.com/Nithis03/packages.git
+            git remote add origin_with_token https://${{ secrets.GH_PAT }}@github.com/Nithis03/packages.git
             echo "rm done"
             git add nest-cli.json
             echo "add done"
