@@ -34,7 +34,7 @@ jobs:
           echo "${{ steps.abc.outputs.added_modified }}"
 
       - name: Modify test test/overwrite.file.md
-        uses: actions/github-action-modify-file-content
+        uses: jaywcjlove/github-action-modify-file-content@main
         with:
           branch: main
           path: main/nest-cli.json
