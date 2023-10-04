@@ -36,16 +36,13 @@ jobs:
       - name: Check for 'apps/clockgain' in changed files
         id: check-clockgain
         run: |
-          if echo "${{ steps.abc.outputs.all }}" | grep -qiE "(^|\s)apps/clock[-_]gain($|\s)"; then
-            echo "The 'apps/clockgain' directory has changes."
-            
-            # Update the 'nest-cli.json' file
-            jq '.root = "apps/clockgain"' nest-cli.json > nest-cli-updated.json
-            mv nest-cli-updated.json nest-cli.json
+          if [[ "${{ steps.abc.outputs.all }}" == *'apps/clock-gain'* ]]; then
+            echo "This is a clock-gain event"
+          elif [[ "${{ steps.abc.outputs.all }}" == *'apps/camped'* ]]; then
+            echo "This is a camped event"
           else
-            echo "No changes in 'apps/clockgain' directory."
+            echo "This is an unknown event"
           fi
-
       # - name: List Modified Files
       #   run: |
       #     modified_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
