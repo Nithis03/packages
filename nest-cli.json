@@ -5,7 +5,7 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/clock-gain/tsconfig.app.json"
+    "tsConfigPath": ""
   },
   "monorepo": true,
   "root": "apps/camped"
