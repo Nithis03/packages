@@ -36,7 +36,7 @@ jobs:
       - name: Check for 'apps/clockgain' in changed files
         id: check-clockgain
         run: |
-          if echo "${{ steps.abc.outputs.all }}" | grep -q "apps/clockgain"; then
+          if echo "${{ steps.abc.outputs.all }}" | grep -qiE "(^|\s)apps/clock[-_]gain($|\s)"; then
             echo "The 'apps/clockgain' directory has changes."
             
             # Update the 'nest-cli.json' file

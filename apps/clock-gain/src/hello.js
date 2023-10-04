@@ -1,2 +1,2 @@
-console.log("Happy men")
+console.log("Happy m")
 
