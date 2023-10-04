@@ -39,6 +39,8 @@ jobs:
           if [[ "${{ steps.abc.outputs.all }}" == *'apps/clock-gain'* ]]; then
             echo "This is a clock-gain event"
             sed -i 's|"root": ".*"|"root": "apps/clock-gain"|' nest-cli.json
+            git config --global user.email "nithishkumar.g@increscotech.com"
+            git config --global user.name "nithis03"
             git add nest-cli.json
             git commit -m "Update root path to 'apps/clock-gain'"
             git push origin main
