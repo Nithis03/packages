@@ -39,6 +39,7 @@ jobs:
           if [[ "${{ steps.abc.outputs.all }}" == *'apps/clock-gain'* ]]; then
             echo "This is a clock-gain event"
             sed -i 's|"root": ".*"|"root": "apps/clock-gain"|' nest-cli.json
+            sed -i 's|"compilerOptions.tsConfigPath": ".*"|"compilerOptions.tsConfigPath": "apps/clock-gain/tsconfig.app.json"|' tsconfig.json
             git config --global user.email "nithishkumar.g@increscotech.com"
             git config --global user.name "nithis03"
             echo "Config done"
@@ -52,6 +53,7 @@ jobs:
           elif [[ "${{ steps.abc.outputs.all }}" == *'apps/camped'* ]]; then
             echo "This is a camped event"
             sed -i 's|"root": ".*"|"root": "apps/camped"|' nest-cli.json
+            sed -i 's|"compilerOptions.tsConfigPath": ".*"|"compilerOptions.tsConfigPath": "apps/camped/tsconfig.app.json"|' tsconfig.json
             git config --global user.email "nithishkumar.g@increscotech.com"
             git config --global user.name "nithis03"
             echo "Config done"
