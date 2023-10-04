@@ -1,1 +1,1 @@
-console.log("Happy harry potter")
+console.log("Happy potter")
