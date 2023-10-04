@@ -15,8 +15,7 @@ jobs:
 
       - name: List Modified Files
         run: |
-          git fetch origin main:main
-          modified_files=$(git diff --name-only --diff-filter=d main~ main)
+          modified_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
           echo "Modified Files:"
           echo "$modified_files"
 
